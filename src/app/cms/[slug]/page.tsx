@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { getPage, getAllPageSlugs } from '@/services/cms';
+import { getPage } from '@/services/cms';
 import type { CmsPageDocument } from '@/types/sanity';
 
 interface CmsPageProps {
@@ -14,7 +14,8 @@ interface MetadataProps {
 }
 
 export default async function CmsPage({ params }: CmsPageProps) {
-  const page: CmsPageDocument | null = await getPage(params.slug);
+  const slug = (await params).slug;
+  const page: CmsPageDocument | null = await getPage(slug);
 
   if (!page) {
     return notFound();
@@ -48,7 +49,8 @@ export default async function CmsPage({ params }: CmsPageProps) {
 export async function generateMetadata({
   params,
 }: MetadataProps): Promise<Metadata> {
-  const page: CmsPageDocument | null = await getPage(params.slug);
+  const slug = (await params).slug;
+  const page: CmsPageDocument | null = await getPage(slug);
 
   const pageTitle = page?.metaTitle ?? page?.title;
   const pageDescription = page?.metaDescription ?? '';
@@ -65,9 +67,10 @@ export async function generateMetadata({
 
 /**
  * Generate static params for all the pages that should be generated statically
+ * Temporarily disabled because of draft mode error
  * @returns {Promise<{ slug: string }[]>}
  */
-export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const slugs = await getAllPageSlugs();
-  return slugs;
-}
+// export async function generateStaticParams(): Promise<{ slug: string }[]> {
+//   const slugs = await getAllPageSlugs();
+//   return slugs;
+// }

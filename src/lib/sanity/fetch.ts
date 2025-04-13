@@ -3,7 +3,6 @@ import { sanityFetch } from '@/lib/sanity/live';
 type FetchOptions = {
   useCdn?: boolean;
   perspective?: 'published' | 'previewDrafts';
-  isStatic?: boolean;
 };
 
 export async function fetchSanity<T>(
