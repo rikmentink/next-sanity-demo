@@ -1,6 +1,8 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
+import {presentationTool} from 'sanity/presentation'
 import {visionTool} from '@sanity/vision'
+
 import {schemaTypes} from './schemaTypes'
 
 export default defineConfig({
@@ -10,7 +12,19 @@ export default defineConfig({
   projectId: '9bo0ysoi',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool(),
+    visionTool(),
+    presentationTool({
+      previewUrl: {
+        // origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN,
+        preview: '/',
+        previewMode: {
+          enable: '/api/draft-mode/enable',
+        },
+      },
+    }),
+  ],
 
   schema: {
     types: schemaTypes,

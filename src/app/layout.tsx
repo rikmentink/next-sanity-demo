@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { draftMode } from 'next/headers';
+import { VisualEditing } from 'next-sanity';
+import { SanityLive } from '@/lib/sanity/live';
 
 import Header from '@/components/layouts/Header';
 import Footer from '@/components/layouts/Footer';
@@ -9,7 +12,7 @@ export const metadata: Metadata = {
   description: 'We develop business software that adapts to you.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -18,7 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-secondary flex min-h-screen flex-col font-[family-name:var(--font-default)]">
         <Header />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow">
+          {children}
+          <SanityLive />
+          {(await draftMode()).isEnabled && <VisualEditing />}
+        </main>
         <Footer />
       </body>
     </html>
