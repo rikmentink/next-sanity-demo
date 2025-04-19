@@ -5,7 +5,7 @@ import { SanityLive } from '@/lib/sanity/live';
 
 import Header from '@/components/layouts/Header';
 import Footer from '@/components/layouts/Footer';
-import '@/app/globals.css';
+import '@/styles/main.css';
 
 export const metadata: Metadata = {
   title: 'Revision Digital',

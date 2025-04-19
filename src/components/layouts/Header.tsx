@@ -1,20 +1,18 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import Button from '@/components/ui/Button';
 
 export default function Header() {
   return (
     <header>
-      <div className="container">
-        <Link href="/">
-          <Image
-            src="/brand/logo.webp"
-            width={100}
-            height={42}
-            style={{ height: '42px', width: 'auto' }}
-            quality={100}
-            alt="Hoizt Logo"
-          />
-        </Link>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between">
+          <Link href="/">
+            <strong className="text-xl">Revision Digital B.V.</strong>
+          </Link>
+          <Button href="/get-started" variant="primary">
+            Get started
+          </Button>
+        </div>
       </div>
     </header>
   );

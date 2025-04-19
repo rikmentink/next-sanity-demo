@@ -1,10 +1,8 @@
 import { defineQuery } from 'next-sanity';
 import { fetchSanity } from '@/lib/sanity/fetch';
-import { CmsPageDocument } from '@/types/sanity';
+import { CmsPage, HomepageContent } from '@/types/sanity';
 
-export const getCmsPage = async (
-  slug: string
-): Promise<CmsPageDocument | null> => {
+export const getCmsPage = async (slug: string): Promise<CmsPage | null> => {
   const query = defineQuery(`*[_type == "cmsPage" && slug.current == $slug][0]{
     _id,
     title,
@@ -12,16 +10,16 @@ export const getCmsPage = async (
     metaTitle,
     metaDescription
   }`);
-  return fetchSanity<CmsPageDocument | null>(query, { slug });
+  return fetchSanity<CmsPage | null>(query, { slug });
 };
 
-export const getAllCmsPages = async (): Promise<CmsPageDocument[]> => {
+export const getAllCmsPages = async (): Promise<CmsPage[]> => {
   const query = defineQuery(`*[_type == "cmsPage"]{
    _id, 
    title,
    slug
  }`);
-  return fetchSanity<CmsPageDocument[]>(query);
+  return fetchSanity<CmsPage[]>(query);
 };
 
 export const getAllCmsPageSlugs = async (): Promise<{ slug: string }[]> => {
@@ -30,4 +28,9 @@ export const getAllCmsPageSlugs = async (): Promise<{ slug: string }[]> => {
   );
   const slugs = await fetchSanity<string[]>(query);
   return slugs.map((slug: string) => ({ slug }));
+};
+
+export const getHomepage = async (): Promise<HomepageContent | null> => {
+  const query = defineQuery(`*[_type == "homepage"][0]`);
+  return fetchSanity<HomepageContent | null>(query);
 };

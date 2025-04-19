@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #f5f4f2;
+  --color-primary-variant: #d0d0d0;
+  --color-secondary: #0f0e0d;
+  --color-foreground: var(--color-primary);
+  --color-background: var(--color-secondary);
+
+  --font-default:
+    'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-default: 1rem;
+  --font-size-h1: 2rem;
+  --font-size-h2: 1.5rem;
+  --font-size-h3: 1.25rem;
+  --font-size-h4: 1rem;
+  --font-size-h5: 0.875rem;
+  --font-size-h6: 0.75rem;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-default);
+    font-size: var(--font-size-default);
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+  }
+}
