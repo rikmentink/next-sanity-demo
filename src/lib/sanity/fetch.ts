@@ -3,6 +3,9 @@ import { sanityFetch } from '@/lib/sanity/live';
 type FetchOptions = {
   useCdn?: boolean;
   perspective?: 'published' | 'previewDrafts';
+  next?: {
+    revalidate?: number;
+  };
 };
 
 export async function fetchSanity<T>(
@@ -11,14 +14,16 @@ export async function fetchSanity<T>(
   options: FetchOptions = {}
 ): Promise<T> {
   try {
+    options = {
+      ...options,
+      next: {
+        revalidate: 0, // Temporarily disable caching
+      },
+    };
     const { data } = await sanityFetch({
       query,
       params,
       ...options,
-      // next: {
-      //   revalidate: 60, // Revalidate every minute
-      //   tags: ['cms'], // Add cache tags for selective revalidation
-      // },
     });
     return data;
   } catch (error) {
