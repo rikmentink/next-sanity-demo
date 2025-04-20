@@ -2,20 +2,24 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getPage } from '@/services/cms';
-import type { CmsPageDocument } from '@/types/sanity';
+import type { CmsPage } from '@/types/sanity';
 
 interface CmsPageProps {
-  params: { slug: string };
+  slug: string;
 }
 
 interface MetadataProps {
-  params: { slug: string };
+  slug: string;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function CmsPage({ params }: CmsPageProps) {
-  const slug = (await params).slug;
-  const page: CmsPageDocument | null = await getPage(slug);
+export default async function CmsPage({
+  params,
+}: {
+  params: Promise<CmsPageProps>;
+}) {
+  const { slug } = await params;
+  const page: CmsPage | null = await getPage(slug);
 
   if (!page) {
     return notFound();
@@ -48,9 +52,11 @@ export default async function CmsPage({ params }: CmsPageProps) {
  */
 export async function generateMetadata({
   params,
-}: MetadataProps): Promise<Metadata> {
-  const slug = (await params).slug;
-  const page: CmsPageDocument | null = await getPage(slug);
+}: {
+  params: Promise<MetadataProps>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const page: CmsPage | null = await getPage(slug);
 
   const pageTitle = page?.metaTitle ?? page?.title;
   const pageDescription = page?.metaDescription ?? '';
