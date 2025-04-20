@@ -17,7 +17,7 @@ export default defineConfig({
     visionTool(),
     presentationTool({
       previewUrl: {
-        origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN,
+        origin: process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://rm-sanity-demo.vercel.app',
         preview: '/',
         previewMode: {
           enable: '/api/draft-mode/enable',
